@@ -15,6 +15,11 @@ class TripItemsController < ApplicationController
   def toggle_packed
     @trip_item.update!(is_packed: !@trip_item.is_packed)
 
+    @category = @trip_item.item.category
+    @category_items = @trip.trip_items
+      .includes(item: [:category, :tags])
+      .select { |ti| ti.item.category_id == @category.id }
+
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @trip }

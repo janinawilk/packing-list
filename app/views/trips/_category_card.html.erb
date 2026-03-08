@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "category-#{category.id}" do %>
+  <div class="category-card">
+    <div class="category-header">
+      <h2 class="category-name"><%= category_icon(category.name, size: 14) %> <%= category.name %></h2>
+      <span class="category-count"><%= trip_items.count { |ti| ti.is_packed } %>/<%= trip_items.count %></span>
+    </div>
+    <div class="category-items">
+      <% trip_items.sort_by { |ti| [ti.is_packed ? 1 : 0, ti.item.name] }.each do |trip_item| %>
+        <%= render "trip_items/trip_item", trip_item: trip_item %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

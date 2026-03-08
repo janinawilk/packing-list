@@ -60,18 +60,7 @@
 
     <div class="trip-categories" id="trip-items">
       <% @trip_items_by_category.each do |category, trip_items| %>
-        <% cat_packed = trip_items.count { |ti| ti.is_packed } %>
-        <div class="category-card">
-          <div class="category-header">
-            <h2 class="category-name"><%= category_icon(category.name, size: 14) %> <%= category.name %></h2>
-            <span class="category-count"><%= cat_packed %>/<%= trip_items.count %></span>
-          </div>
-          <div class="category-items">
-            <% trip_items.each do |trip_item| %>
-              <%= render "trip_items/trip_item", trip_item: trip_item %>
-            <% end %>
-          </div>
-        </div>
+        <%= render "trips/category_card", category: category, trip_items: trip_items %>
       <% end %>
 
       <% if @trip.trip_items.empty? %>

@@ -9,7 +9,7 @@ class TripsController < ApplicationController
     @trips = Trip.includes(:trip_items, :tags).order(created_at: :desc)
     @trip_items_by_category = @trip.trip_items
       .includes(item: [:category, :tags])
-      .sort_by { |ti| [ti.item.category.name, ti.item.name] }
+      .sort_by { |ti| [ti.item.category.name, ti.is_packed ? 1 : 0, ti.item.name] }
       .group_by { |ti| ti.item.category }
     @available_items = Item.where.not(id: @trip.item_ids).order(:name)
   end
