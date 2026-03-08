@@ -1,0 +1,11 @@
+<div class="trip-categories" id="trip-items">
+  <% trip_items_by_category.each do |category, items| %>
+    <%= render "trips/category_card", category: category, trip_items: items %>
+  <% end %>
+
+  <% if trip.trip_items.empty? %>
+    <div class="empty-state">
+      <p>No items yet. Add some below!</p>
+    </div>
+  <% end %>
+</div>

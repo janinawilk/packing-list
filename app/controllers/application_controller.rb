@@ -4,4 +4,9 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  http_basic_authenticate_with \
+    name: Rails.application.credentials.dig(:http_auth, :username) || "packit",
+    password: Rails.application.credentials.dig(:http_auth, :password) || "changeme",
+    if: -> { !Rails.env.test? }
 end

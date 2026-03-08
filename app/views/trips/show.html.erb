@@ -1,3 +1,4 @@
+<%= turbo_stream_from @trip %>
 <div class="trip-layout">
   <aside class="trip-sidebar">
     <div class="sidebar-header">
@@ -61,18 +62,10 @@
       <%= render "trips/progress", trip: @trip %>
     </div>
 
-    <div class="trip-categories" id="trip-items">
-      <% @trip_items_by_category.each do |category, trip_items| %>
-        <%= render "trips/category_card", category: category, trip_items: trip_items %>
-      <% end %>
+    <%= render "trips/trip_items_list", trip: @trip, trip_items_by_category: @trip_items_by_category %>
 
-      <% if @trip.trip_items.empty? %>
-        <div class="empty-state">
-          <p>No items yet. Add some below!</p>
-        </div>
-      <% end %>
+    <div id="add-item-form">
+      <%= render "trips/add_item_form", trip: @trip, available_items: @available_items %>
     </div>
-
-    <%= render "trips/add_item_form", trip: @trip, available_items: @available_items %>
   </main>
 </div>

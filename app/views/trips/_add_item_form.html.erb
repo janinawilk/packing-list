@@ -1,5 +1,5 @@
 <% if available_items.any? %>
-  <div class="add-item-section" id="add-item-form">
+  <div class="add-item-section">
     <h3 class="add-item-title">Add an item</h3>
     <%= form_with url: trip_trip_items_path(trip), method: :post, class: "add-item-form" do |f| %>
       <div class="add-item-select">
