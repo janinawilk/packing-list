@@ -1,0 +1,11 @@
+tshirt:
+  name: T-shirt
+  category: clothing
+
+sunscreen:
+  name: Sunscreen
+  category: toiletries
+
+phone_charger:
+  name: Phone charger
+  category: electronics

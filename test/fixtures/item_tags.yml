@@ -1,0 +1,11 @@
+tshirt_beach:
+  item: tshirt
+  tag: beach
+
+sunscreen_beach:
+  item: sunscreen
+  tag: beach
+
+sunscreen_hiking:
+  item: sunscreen
+  tag: hiking

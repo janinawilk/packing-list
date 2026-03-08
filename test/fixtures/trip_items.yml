@@ -1,0 +1,11 @@
+beach_tshirt:
+  trip: beach_vacation
+  item: tshirt
+  is_packed: false
+  added_manually: false
+
+beach_sunscreen:
+  trip: beach_vacation
+  item: sunscreen
+  is_packed: true
+  added_manually: false
