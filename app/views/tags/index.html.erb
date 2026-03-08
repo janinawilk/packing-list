@@ -1,0 +1,14 @@
+<div class="level">
+  <div class="level-left">
+    <h1 class="title">Tags</h1>
+  </div>
+  <div class="level-right">
+    <%= link_to "New Tag", new_tag_path, class: "button is-primary" %>
+  </div>
+</div>
+
+<div class="tags are-medium">
+  <% @tags.each do |tag| %>
+    <span class="tag is-primary is-light"><%= tag.name %></span>
+  <% end %>
+</div>

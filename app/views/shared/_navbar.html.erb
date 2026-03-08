@@ -1,0 +1,26 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation" data-controller="navbar">
+  <div class="container">
+    <div class="navbar-brand">
+      <%= link_to root_path, class: "navbar-item has-text-weight-bold is-size-5" do %>
+        🧳 Packing List
+      <% end %>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+         data-action="click->navbar#toggle" data-navbar-target="burger">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu" data-navbar-target="menu">
+      <div class="navbar-start">
+        <%= link_to "Trips", trips_path, class: "navbar-item" %>
+        <%= link_to "Items", items_path, class: "navbar-item" %>
+        <%= link_to "Categories", categories_path, class: "navbar-item" %>
+        <%= link_to "Tags", tags_path, class: "navbar-item" %>
+      </div>
+    </div>
+  </div>
+</nav>

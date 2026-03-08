@@ -1,0 +1,32 @@
+<div class="level">
+  <div class="level-left">
+    <h1 class="title">Trips</h1>
+  </div>
+  <div class="level-right">
+    <%= link_to "New Trip", new_trip_path, class: "button is-primary" %>
+  </div>
+</div>
+
+<% if @trips.any? %>
+  <div class="columns is-multiline">
+    <% @trips.each do |trip| %>
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-content">
+            <p class="title is-5"><%= trip.name %></p>
+            <p class="subtitle is-6 has-text-grey">
+              Created <%= time_ago_in_words(trip.created_at) %> ago
+            </p>
+          </div>
+          <footer class="card-footer">
+            <%= link_to "View", trip_path(trip), class: "card-footer-item" %>
+          </footer>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="has-text-centered py-6">
+    <p class="is-size-5 has-text-grey">No trips yet. Create your first one!</p>
+  </div>
+<% end %>

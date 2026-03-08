@@ -11,9 +11,6 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
@@ -24,6 +21,34 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "shared/navbar" %>
+
+    <% if notice.present? %>
+      <section class="section py-3">
+        <div class="container">
+          <div class="notification is-success is-light">
+            <button class="delete" data-controller="dismissable" data-action="click->dismissable#dismiss"></button>
+            <%= notice %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
+    <% if alert.present? %>
+      <section class="section py-3">
+        <div class="container">
+          <div class="notification is-danger is-light">
+            <button class="delete" data-controller="dismissable" data-action="click->dismissable#dismiss"></button>
+            <%= alert %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
+    <section class="section">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </section>
   </body>
 </html>

@@ -1,0 +1,14 @@
+<div class="level">
+  <div class="level-left">
+    <h1 class="title">Categories</h1>
+  </div>
+  <div class="level-right">
+    <%= link_to "New Category", new_category_path, class: "button is-primary" %>
+  </div>
+</div>
+
+<div class="tags are-medium">
+  <% @categories.each do |category| %>
+    <span class="tag is-info is-light"><%= category.name %></span>
+  <% end %>
+</div>

@@ -1,0 +1,35 @@
+<div class="level">
+  <div class="level-left">
+    <h1 class="title">Items</h1>
+  </div>
+  <div class="level-right">
+    <%= link_to "New Item", new_item_path, class: "button is-primary" %>
+  </div>
+</div>
+
+<div class="table-container">
+  <table class="table is-fullwidth is-hoverable is-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Tags</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><span class="tag is-info is-light"><%= item.category.name %></span></td>
+          <td>
+            <div class="tags">
+              <% item.tags.each do |tag| %>
+                <span class="tag is-primary is-light is-small"><%= tag.name %></span>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
