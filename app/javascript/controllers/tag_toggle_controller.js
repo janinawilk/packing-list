@@ -6,7 +6,6 @@ export default class extends Controller {
   toggle(event) {
     event.preventDefault()
     this.checkboxTarget.checked = !this.checkboxTarget.checked
-    this.element.classList.toggle("is-primary")
     this.element.classList.toggle("is-outlined")
   }
 }

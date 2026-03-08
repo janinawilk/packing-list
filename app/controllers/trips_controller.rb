@@ -6,6 +6,7 @@ class TripsController < ApplicationController
   end
 
   def show
+    @trips = Trip.includes(:trip_items, :tags).order(created_at: :desc)
     @trip_items_by_category = @trip.trip_items
       .includes(item: [:category, :tags])
       .sort_by { |ti| [ti.item.category.name, ti.item.name] }

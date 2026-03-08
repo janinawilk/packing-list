@@ -1,8 +1,9 @@
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation" data-controller="navbar">
+<nav class="navbar packit-navbar" role="navigation" aria-label="main navigation" data-controller="navbar">
   <div class="container">
     <div class="navbar-brand">
-      <%= link_to root_path, class: "navbar-item has-text-weight-bold is-size-5" do %>
-        🧳 Packing List
+      <%= link_to root_path, class: "navbar-item packit-brand" do %>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="mr-2"><rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        PackIt
       <% end %>
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"

@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.includes(:category, :tags).order(:name)
+    @items_by_category = @items.group_by(&:category).sort_by { |cat, _| cat.name }
   end
 
   def new

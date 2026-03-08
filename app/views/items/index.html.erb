@@ -4,42 +4,42 @@
 </div>
 
 <% if @items.any? %>
-  <div class="table-container">
-    <table class="table is-fullwidth is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Tags</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @items.each do |item| %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><span class="tag is-info is-light"><%= item.category.name %></span></td>
-            <td>
-              <div class="tags">
+  <div class="items-categories">
+    <% @items_by_category.each do |category, items| %>
+      <div class="category-card">
+        <div class="category-header">
+          <h2 class="category-name"><%= category_icon(category.name, size: 14) %> <%= category.name %></h2>
+          <span class="category-count"><%= items.size %></span>
+        </div>
+        <div class="category-items">
+          <% items.each do |item| %>
+            <div class="item-card">
+              <div class="item-card-name"><%= item.name %></div>
+              <div class="item-card-meta">
                 <% item.tags.each do |tag| %>
-                  <span class="tag is-primary is-light is-small"><%= tag.name %></span>
+                  <span class="item-tag-chip <%= tag_color_class(tag.name) %>"><%= tag.name %></span>
                 <% end %>
               </div>
-            </td>
-            <td class="has-text-right">
-              <%= link_to "Edit", edit_item_path(item), class: "button is-small is-link is-light" %>
-              <%= button_to "Delete", item_path(item), method: :delete,
-                    class: "button is-small is-danger is-light",
-                    form: { data: { turbo_confirm: "Delete #{item.name}?" } } %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+              <div class="item-card-actions">
+                <%= link_to edit_item_path(item), class: "item-action-btn", title: "Edit" do %>
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <% end %>
+                <%= button_to item_path(item), method: :delete,
+                      class: "item-action-btn item-action-delete",
+                      title: "Delete",
+                      form: { data: { turbo_confirm: "Usunąć #{item.name}?" } } do %>
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% else %>
-  <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey mb-4">No items yet.</p>
-    <%= link_to "Create your first item", new_item_path, class: "button is-primary" %>
+  <div class="empty-state">
+    <p>Brak przedmiotów.</p>
+    <%= link_to "Dodaj pierwszy przedmiot", new_item_path, class: "button is-primary mt-3" %>
   </div>
 <% end %>

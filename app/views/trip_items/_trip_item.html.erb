@@ -2,18 +2,26 @@
   <div class="trip-item-row">
     <div class="trip-item-left">
       <%= button_to toggle_packed_trip_trip_item_path(trip_item.trip, trip_item),
-            method: :patch, class: "button is-small #{trip_item.is_packed ? 'is-success' : 'is-light'}" do %>
-        <%= trip_item.is_packed ? "✓" : "○" %>
+            method: :patch, class: "pack-checkbox #{'is-checked' if trip_item.is_packed}" do %>
+        <% if trip_item.is_packed %>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect width="20" height="20" rx="4" fill="currentColor"/>
+            <path d="M5 10l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        <% else %>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="0.5" y="0.5" width="19" height="19" rx="3.5" stroke="currentColor"/>
+          </svg>
+        <% end %>
       <% end %>
-      <span class="trip-item-name <%= 'has-text-grey-light is-line-through' if trip_item.is_packed %>">
+      <span class="trip-item-name <%= 'is-packed' if trip_item.is_packed %>">
         <%= trip_item.item.name %>
       </span>
       <% if trip_item.added_manually %>
-        <span class="tag is-warning is-light is-small">added</span>
+        <span class="item-badge">added</span>
       <% end %>
     </div>
-    <%= button_to trip_trip_item_path(trip_item.trip, trip_item),
-          method: :delete, class: "delete is-small",
-          form: { data: { turbo_confirm: "Remove #{trip_item.item.name}?" } } %>
+    <%= button_to "", trip_trip_item_path(trip_item.trip, trip_item),
+          method: :delete, class: "item-remove" %>
   </div>
 <% end %>

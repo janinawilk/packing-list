@@ -1,15 +1,11 @@
 <% if available_items.any? %>
-  <div class="box mt-5" id="add-item-form">
-    <h3 class="subtitle is-6">Add an item</h3>
-    <%= form_with url: trip_trip_items_path(trip), method: :post, class: "field has-addons" do |f| %>
-      <div class="control is-expanded">
-        <div class="select is-fullwidth">
-          <%= select_tag :item_id, options_from_collection_for_select(available_items, :id, :name), prompt: "Select an item..." %>
-        </div>
+  <div class="add-item-section" id="add-item-form">
+    <h3 class="add-item-title">Add an item</h3>
+    <%= form_with url: trip_trip_items_path(trip), method: :post, class: "add-item-form" do |f| %>
+      <div class="add-item-select">
+        <%= select_tag :item_id, options_from_collection_for_select(available_items, :id, :name), prompt: "Select an item..." %>
       </div>
-      <div class="control">
-        <%= f.submit "Add", class: "button is-primary" %>
-      </div>
+      <%= f.submit "Add", class: "add-item-btn" %>
     <% end %>
   </div>
 <% end %>

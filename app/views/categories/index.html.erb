@@ -4,34 +4,31 @@
 </div>
 
 <% if @categories.any? %>
-  <div class="table-container">
-    <table class="table is-fullwidth is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Items</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @categories.each do |category| %>
-          <tr>
-            <td><%= category.name %></td>
-            <td><span class="tag"><%= category.items.count %></span></td>
-            <td class="has-text-right">
-              <%= link_to "Edit", edit_category_path(category), class: "button is-small is-link is-light" %>
-              <%= button_to "Delete", category_path(category), method: :delete,
-                    class: "button is-small is-danger is-light",
-                    form: { data: { turbo_confirm: "Delete #{category.name} and all its items?" } } %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="resource-list">
+    <% @categories.each do |category| %>
+      <div class="resource-card">
+        <div class="resource-card-left">
+          <span class="resource-icon-wrap"><%= category_icon(category.name) %></span>
+          <span class="resource-name"><%= category.name %></span>
+          <span class="resource-count"><%= category.items.count %> items</span>
+        </div>
+        <div class="item-card-actions">
+          <%= link_to edit_category_path(category), class: "item-action-btn", title: "Edit" do %>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <% end %>
+          <%= button_to category_path(category), method: :delete,
+                class: "item-action-btn item-action-delete",
+                title: "Delete",
+                form: { data: { turbo_confirm: "Usunąć #{category.name} i wszystkie przedmioty?" } } do %>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% else %>
-  <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey mb-4">No categories yet.</p>
-    <%= link_to "Create your first category", new_category_path, class: "button is-primary" %>
+  <div class="empty-state">
+    <p>Brak kategorii.</p>
+    <%= link_to "Dodaj pierwszą kategorię", new_category_path, class: "button is-primary mt-3" %>
   </div>
 <% end %>

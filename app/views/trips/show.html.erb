@@ -1,42 +1,86 @@
-<div class="page-header">
-  <div>
-    <h1 class="title mb-2"><%= @trip.name %></h1>
-    <% if @trip.tags.any? %>
-      <div class="tags">
-        <% @trip.tags.each do |tag| %>
-          <span class="tag is-primary is-light"><%= tag.name %></span>
+<div class="trip-layout">
+  <aside class="trip-sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">My Lists</h2>
+      <%= link_to "+ New List", new_trip_path, class: "sidebar-new-btn" %>
+    </div>
+
+    <div class="sidebar-trips">
+      <% @trips.each do |trip| %>
+        <% total = trip.trip_items.size %>
+        <% packed = trip.trip_items.count { |ti| ti.is_packed } %>
+        <%= link_to trip_path(trip), class: "sidebar-trip #{'is-active' if trip == @trip}" do %>
+          <div class="sidebar-trip-header">
+            <span class="sidebar-trip-name"><%= trip.name %></span>
+            <span class="sidebar-trip-count"><%= packed %>/<%= total %></span>
+          </div>
+          <% if trip.tags.any? %>
+            <div class="sidebar-trip-tags">
+              <% trip.tags.each do |tag| %>
+                <span class="mini-tag <%= tag_color_class(tag.name) %>"><%= tag.name %></span>
+              <% end %>
+            </div>
+          <% end %>
+          <% if total > 0 %>
+            <div class="sidebar-progress-bar">
+              <div class="sidebar-progress-fill" style="width: <%= total > 0 ? (packed.to_f / total * 100).round : 0 %>%"></div>
+            </div>
+          <% end %>
         <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="buttons">
-    <%= link_to "Edit", edit_trip_path(@trip), class: "button is-link is-light" %>
-    <%= button_to "Delete", trip_path(@trip), method: :delete,
-          class: "button is-danger is-light",
-          form: { data: { turbo_confirm: "Delete this trip and all its items?" } } %>
-  </div>
-</div>
-
-<%= render "trips/progress", trip: @trip %>
-
-<div id="trip-items">
-  <% @trip_items_by_category.each do |category, trip_items| %>
-    <div class="box mb-4">
-      <h2 class="subtitle is-5 mb-3">
-        <%= category.name %>
-        <span class="tag is-light ml-2"><%= trip_items.count %></span>
-      </h2>
-      <% trip_items.each do |trip_item| %>
-        <%= render "trip_items/trip_item", trip_item: trip_item %>
       <% end %>
     </div>
-  <% end %>
+  </aside>
 
-  <% if @trip.trip_items.empty? %>
-    <div class="has-text-centered py-6">
-      <p class="is-size-5 has-text-grey">No items yet. Add some below!</p>
+  <main class="trip-main">
+    <div class="trip-header">
+      <div class="trip-header-left">
+        <div class="trip-title-row">
+          <h1 class="trip-title"><%= @trip.name %></h1>
+          <div class="trip-actions">
+            <%= link_to edit_trip_path(@trip), class: "trip-action-btn", title: "Edit trip" do %>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <% end %>
+            <%= button_to trip_path(@trip), method: :delete,
+                  class: "trip-action-btn trip-action-delete", title: "Delete trip",
+                  form: { data: { turbo_confirm: "Delete this trip and all its items?" } } do %>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <% end %>
+          </div>
+        </div>
+        <% if @trip.tags.any? %>
+          <div class="trip-tags-row">
+            <% @trip.tags.each do |tag| %>
+              <span class="trip-tag <%= tag_color_class(tag.name) %>"><%= tag.name %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <%= render "trips/progress", trip: @trip %>
     </div>
-  <% end %>
-</div>
 
-<%= render "trips/add_item_form", trip: @trip, available_items: @available_items %>
+    <div class="trip-categories" id="trip-items">
+      <% @trip_items_by_category.each do |category, trip_items| %>
+        <% cat_packed = trip_items.count { |ti| ti.is_packed } %>
+        <div class="category-card">
+          <div class="category-header">
+            <h2 class="category-name"><%= category_icon(category.name, size: 14) %> <%= category.name %></h2>
+            <span class="category-count"><%= cat_packed %>/<%= trip_items.count %></span>
+          </div>
+          <div class="category-items">
+            <% trip_items.each do |trip_item| %>
+              <%= render "trip_items/trip_item", trip_item: trip_item %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @trip.trip_items.empty? %>
+        <div class="empty-state">
+          <p>No items yet. Add some below!</p>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render "trips/add_item_form", trip: @trip, available_items: @available_items %>
+  </main>
+</div>

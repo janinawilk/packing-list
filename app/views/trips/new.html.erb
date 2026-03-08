@@ -24,7 +24,7 @@
     <div class="control">
       <div class="buttons">
         <% Tag.order(:name).each do |tag| %>
-          <label class="button is-outlined" data-controller="tag-toggle" data-action="click->tag-toggle#toggle">
+          <label class="button is-primary is-outlined" data-controller="tag-toggle" data-action="click->tag-toggle#toggle">
             <%= check_box_tag "trip[tag_ids][]", tag.id, false, class: "is-hidden", data: { tag_toggle_target: "checkbox" } %>
             <span><%= tag.name %></span>
           </label>
