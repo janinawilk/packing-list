@@ -1,37 +1,33 @@
-<div class="level">
-  <div class="level-left">
-    <h1 class="title">Trips</h1>
-  </div>
-  <div class="level-right">
-    <%= link_to "New Trip", new_trip_path, class: "button is-primary" %>
-  </div>
+<div class="page-header">
+  <h1 class="title mb-0">Trips</h1>
+  <%= link_to "New Trip", new_trip_path, class: "button is-primary" %>
 </div>
 
 <% if @trips.any? %>
   <div class="columns is-multiline">
     <% @trips.each do |trip| %>
-      <div class="column is-4">
-        <div class="card">
-          <div class="card-content">
-            <p class="title is-5"><%= trip.name %></p>
-            <% total = trip.trip_items.count %>
-            <% packed = trip.trip_items.where(is_packed: true).count %>
-            <% if total > 0 %>
-              <progress class="progress is-primary is-small mb-2" value="<%= packed %>" max="<%= total %>"></progress>
-              <p class="is-size-7 has-text-grey"><%= packed %>/<%= total %> packed</p>
-            <% else %>
-              <p class="is-size-7 has-text-grey">No items yet</p>
-            <% end %>
+      <div class="column is-4-desktop is-6-tablet">
+        <%= link_to trip_path(trip), class: "card-link", style: "text-decoration: none; color: inherit;" do %>
+          <div class="card">
+            <div class="card-content">
+              <p class="title is-5"><%= trip.name %></p>
+              <% total = trip.trip_items.size %>
+              <% packed = trip.trip_items.count { |ti| ti.is_packed } %>
+              <% if total > 0 %>
+                <progress class="progress is-primary is-small mb-2" value="<%= packed %>" max="<%= total %>"></progress>
+                <p class="is-size-7 has-text-grey"><%= packed %>/<%= total %> packed</p>
+              <% else %>
+                <p class="is-size-7 has-text-grey">No items yet</p>
+              <% end %>
+            </div>
           </div>
-          <footer class="card-footer">
-            <%= link_to "View", trip_path(trip), class: "card-footer-item" %>
-          </footer>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>
 <% else %>
   <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey">No trips yet. Create your first one!</p>
+    <p class="is-size-5 has-text-grey mb-4">No trips yet.</p>
+    <%= link_to "Create your first trip", new_trip_path, class: "button is-primary is-medium" %>
   </div>
 <% end %>

@@ -1,10 +1,6 @@
-<div class="level">
-  <div class="level-left">
-    <h1 class="title">Tags</h1>
-  </div>
-  <div class="level-right">
-    <%= link_to "New Tag", new_tag_path, class: "button is-primary" %>
-  </div>
+<div class="page-header">
+  <h1 class="title mb-0">Tags</h1>
+  <%= link_to "New Tag", new_tag_path, class: "button is-primary" %>
 </div>
 
 <% if @tags.any? %>
@@ -35,6 +31,7 @@
   </div>
 <% else %>
   <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey">No tags yet.</p>
+    <p class="is-size-5 has-text-grey mb-4">No tags yet.</p>
+    <%= link_to "Create your first tag", new_tag_path, class: "button is-primary" %>
   </div>
 <% end %>

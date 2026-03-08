@@ -1,10 +1,6 @@
-<div class="level">
-  <div class="level-left">
-    <h1 class="title">Items</h1>
-  </div>
-  <div class="level-right">
-    <%= link_to "New Item", new_item_path, class: "button is-primary" %>
-  </div>
+<div class="page-header">
+  <h1 class="title mb-0">Items</h1>
+  <%= link_to "New Item", new_item_path, class: "button is-primary" %>
 </div>
 
 <% if @items.any? %>
@@ -43,6 +39,7 @@
   </div>
 <% else %>
   <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey">No items yet.</p>
+    <p class="is-size-5 has-text-grey mb-4">No items yet.</p>
+    <%= link_to "Create your first item", new_item_path, class: "button is-primary" %>
   </div>
 <% end %>

@@ -1,10 +1,6 @@
-<div class="level">
-  <div class="level-left">
-    <h1 class="title">Categories</h1>
-  </div>
-  <div class="level-right">
-    <%= link_to "New Category", new_category_path, class: "button is-primary" %>
-  </div>
+<div class="page-header">
+  <h1 class="title mb-0">Categories</h1>
+  <%= link_to "New Category", new_category_path, class: "button is-primary" %>
 </div>
 
 <% if @categories.any? %>
@@ -26,7 +22,7 @@
               <%= link_to "Edit", edit_category_path(category), class: "button is-small is-link is-light" %>
               <%= button_to "Delete", category_path(category), method: :delete,
                     class: "button is-small is-danger is-light",
-                    form: { data: { turbo_confirm: "Delete #{category.name}?" } } %>
+                    form: { data: { turbo_confirm: "Delete #{category.name} and all its items?" } } %>
             </td>
           </tr>
         <% end %>
@@ -35,6 +31,7 @@
   </div>
 <% else %>
   <div class="has-text-centered py-6">
-    <p class="is-size-5 has-text-grey">No categories yet.</p>
+    <p class="is-size-5 has-text-grey mb-4">No categories yet.</p>
+    <%= link_to "Create your first category", new_category_path, class: "button is-primary" %>
   </div>
 <% end %>

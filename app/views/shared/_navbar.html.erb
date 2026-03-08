@@ -16,10 +16,10 @@
 
     <div class="navbar-menu" data-navbar-target="menu">
       <div class="navbar-start">
-        <%= link_to "Trips", trips_path, class: "navbar-item" %>
-        <%= link_to "Items", items_path, class: "navbar-item" %>
-        <%= link_to "Categories", categories_path, class: "navbar-item" %>
-        <%= link_to "Tags", tags_path, class: "navbar-item" %>
+        <%= link_to "Trips", trips_path, class: "navbar-item #{'is-active has-text-weight-bold' if controller_name == 'trips'}" %>
+        <%= link_to "Items", items_path, class: "navbar-item #{'is-active has-text-weight-bold' if controller_name == 'items'}" %>
+        <%= link_to "Categories", categories_path, class: "navbar-item #{'is-active has-text-weight-bold' if controller_name == 'categories'}" %>
+        <%= link_to "Tags", tags_path, class: "navbar-item #{'is-active has-text-weight-bold' if controller_name == 'tags'}" %>
       </div>
     </div>
   </div>

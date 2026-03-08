@@ -1,44 +1,49 @@
-// @charset "utf-8";
-
-// Import a Google Font
-// @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-
-// Set your brand colors
-// $purple: #8A4D76;
-// $pink: #FA7C91;
-// $brown: #757763;
-// $beige-light: #D0D1CD;
-// $beige-lighter: #EFF0EB;
-
-// Update Bulma's global variables
-// $family-sans-serif: "Nunito", sans-serif;
-// $grey-dark: $brown;
-// $grey-light: $beige-light;
-// $primary: $purple;
-// $link: $pink;
-// $widescreen-enabled: false;
-// $fullhd-enabled: false;
-
-// Update some of Bulma's component variables
-// $body-background-color: $beige-lighter;
-// $control-border-width: 2px;
-// $input-border-color: transparent;
-// $input-shadow: none;
-
-// Import only what you need from Bulma
-// @import "bulma/sass/utilities/_all.sass";
-// @import "bulma/sass/base/_all.sass";
-// @import "bulma/sass/elements/button.sass";
-// @import "bulma/sass/elements/container.sass";
-// @import "bulma/sass/elements/title.sass";
-// @import "bulma/sass/form/_all.sass";
-// @import "bulma/sass/components/navbar.sass";
-// @import "bulma/sass/layout/hero.sass";
-// @import "bulma/sass/layout/section.sass";
-
 @import 'bulma/bulma';
 
 // Custom styles
 .is-line-through {
   text-decoration: line-through;
+}
+
+// Flash auto-dismiss transition
+.notification.is-dismissing {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+// Better spacing for trip item rows on mobile
+.trip-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid hsl(0, 0%, 96%);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.trip-item-row .trip-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.trip-item-row .trip-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Page header that works on mobile
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }

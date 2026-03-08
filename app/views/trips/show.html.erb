@@ -1,23 +1,19 @@
-<div class="level">
-  <div class="level-left">
-    <div>
-      <h1 class="title"><%= @trip.name %></h1>
-      <% if @trip.tags.any? %>
-        <div class="tags">
-          <% @trip.tags.each do |tag| %>
-            <span class="tag is-primary is-light"><%= tag.name %></span>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+<div class="page-header">
+  <div>
+    <h1 class="title mb-2"><%= @trip.name %></h1>
+    <% if @trip.tags.any? %>
+      <div class="tags">
+        <% @trip.tags.each do |tag| %>
+          <span class="tag is-primary is-light"><%= tag.name %></span>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-  <div class="level-right">
-    <div class="buttons">
-      <%= link_to "Edit", edit_trip_path(@trip), class: "button is-link is-light" %>
-      <%= button_to "Delete", trip_path(@trip), method: :delete,
-            class: "button is-danger is-light",
-            form: { data: { turbo_confirm: "Delete this trip?" } } %>
-    </div>
+  <div class="buttons">
+    <%= link_to "Edit", edit_trip_path(@trip), class: "button is-link is-light" %>
+    <%= button_to "Delete", trip_path(@trip), method: :delete,
+          class: "button is-danger is-light",
+          form: { data: { turbo_confirm: "Delete this trip and all its items?" } } %>
   </div>
 </div>
 
@@ -26,7 +22,10 @@
 <div id="trip-items">
   <% @trip_items_by_category.each do |category, trip_items| %>
     <div class="box mb-4">
-      <h2 class="subtitle is-5 mb-3"><%= category.name %></h2>
+      <h2 class="subtitle is-5 mb-3">
+        <%= category.name %>
+        <span class="tag is-light ml-2"><%= trip_items.count %></span>
+      </h2>
       <% trip_items.each do |trip_item| %>
         <%= render "trip_items/trip_item", trip_item: trip_item %>
       <% end %>
