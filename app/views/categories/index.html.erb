@@ -7,8 +7,34 @@
   </div>
 </div>
 
-<div class="tags are-medium">
-  <% @categories.each do |category| %>
-    <span class="tag is-info is-light"><%= category.name %></span>
-  <% end %>
-</div>
+<% if @categories.any? %>
+  <div class="table-container">
+    <table class="table is-fullwidth is-hoverable is-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><span class="tag"><%= category.items.count %></span></td>
+            <td class="has-text-right">
+              <%= link_to "Edit", edit_category_path(category), class: "button is-small is-link is-light" %>
+              <%= button_to "Delete", category_path(category), method: :delete,
+                    class: "button is-small is-danger is-light",
+                    form: { data: { turbo_confirm: "Delete #{category.name}?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="has-text-centered py-6">
+    <p class="is-size-5 has-text-grey">No categories yet.</p>
+  </div>
+<% end %>

@@ -1,0 +1,52 @@
+<%= form_with(model: item) do |f| %>
+  <% if item.errors.any? %>
+    <div class="notification is-danger is-light">
+      <ul>
+        <% item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, class: "label" %>
+    <div class="control">
+      <%= f.text_field :name, class: "input", autofocus: true %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id, "Category", class: "label" %>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <%= f.collection_select :category_id, Category.order(:name), :id, :name, prompt: "Select a category" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :tag_ids, "Tags", class: "label" %>
+    <div class="control">
+      <div class="checkboxes">
+        <% Tag.order(:name).each do |tag| %>
+          <label class="checkbox mr-4">
+            <%= check_box_tag "item[tag_ids][]", tag.id, item.tag_ids.include?(tag.id) %>
+            <%= tag.name %>
+          </label>
+        <% end %>
+      </div>
+    </div>
+    <%# Hidden field ensures tag_ids is sent even when none are checked %>
+    <%= hidden_field_tag "item[tag_ids][]", "" %>
+  </div>
+
+  <div class="field is-grouped mt-5">
+    <div class="control">
+      <%= f.submit class: "button is-primary" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", items_path, class: "button is-light" %>
+    </div>
+  </div>
+<% end %>

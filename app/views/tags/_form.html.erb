@@ -1,0 +1,27 @@
+<%= form_with(model: tag) do |f| %>
+  <% if tag.errors.any? %>
+    <div class="notification is-danger is-light">
+      <ul>
+        <% tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, class: "label" %>
+    <div class="control">
+      <%= f.text_field :name, class: "input", autofocus: true %>
+    </div>
+  </div>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <%= f.submit class: "button is-primary" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", tags_path, class: "button is-light" %>
+    </div>
+  </div>
+<% end %>
