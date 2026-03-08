@@ -1,0 +1,7 @@
+<%= turbo_stream.replace @trip_item do %>
+  <%= render "trip_items/trip_item", trip_item: @trip_item %>
+<% end %>
+
+<%= turbo_stream.replace "trip-progress" do %>
+  <%= render "trips/progress", trip: @trip %>
+<% end %>

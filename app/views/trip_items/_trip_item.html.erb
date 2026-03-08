@@ -1,0 +1,27 @@
+<%= turbo_frame_tag trip_item do %>
+  <div class="level is-mobile py-2" id="<%= dom_id(trip_item) %>">
+    <div class="level-left">
+      <div class="level-item">
+        <%= button_to toggle_packed_trip_trip_item_path(trip_item.trip, trip_item),
+              method: :patch, class: "button is-small #{trip_item.is_packed ? 'is-success' : 'is-light'}" do %>
+          <%= trip_item.is_packed ? "✓" : "○" %>
+        <% end %>
+      </div>
+      <div class="level-item">
+        <span class="<%= 'has-text-grey-light is-line-through' if trip_item.is_packed %>">
+          <%= trip_item.item.name %>
+        </span>
+        <% if trip_item.added_manually %>
+          <span class="tag is-warning is-light is-small ml-2">added</span>
+        <% end %>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <%= button_to trip_trip_item_path(trip_item.trip, trip_item),
+              method: :delete, class: "delete is-small",
+              form: { data: { turbo_confirm: "Remove #{trip_item.item.name}?" } } %>
+      </div>
+    </div>
+  </div>
+<% end %>

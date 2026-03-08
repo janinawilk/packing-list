@@ -14,9 +14,14 @@
         <div class="card">
           <div class="card-content">
             <p class="title is-5"><%= trip.name %></p>
-            <p class="subtitle is-6 has-text-grey">
-              Created <%= time_ago_in_words(trip.created_at) %> ago
-            </p>
+            <% total = trip.trip_items.count %>
+            <% packed = trip.trip_items.where(is_packed: true).count %>
+            <% if total > 0 %>
+              <progress class="progress is-primary is-small mb-2" value="<%= packed %>" max="<%= total %>"></progress>
+              <p class="is-size-7 has-text-grey"><%= packed %>/<%= total %> packed</p>
+            <% else %>
+              <p class="is-size-7 has-text-grey">No items yet</p>
+            <% end %>
           </div>
           <footer class="card-footer">
             <%= link_to "View", trip_path(trip), class: "card-footer-item" %>

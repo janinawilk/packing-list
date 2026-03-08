@@ -1,0 +1,44 @@
+<h1 class="title">New Trip</h1>
+
+<%= form_with(model: @trip) do |f| %>
+  <% if @trip.errors.any? %>
+    <div class="notification is-danger is-light">
+      <ul>
+        <% @trip.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, class: "label" %>
+    <div class="control">
+      <%= f.text_field :name, class: "input", placeholder: "e.g. Beach Weekend in Croatia", autofocus: true %>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">What kind of trip?</label>
+    <p class="help mb-3">Select tags to auto-populate your packing list</p>
+    <div class="control">
+      <div class="buttons">
+        <% Tag.order(:name).each do |tag| %>
+          <label class="button is-outlined" data-controller="tag-toggle" data-action="click->tag-toggle#toggle">
+            <%= check_box_tag "trip[tag_ids][]", tag.id, false, class: "is-hidden", data: { tag_toggle_target: "checkbox" } %>
+            <span><%= tag.name %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-grouped mt-5">
+    <div class="control">
+      <%= f.submit "Create Trip", class: "button is-primary is-medium" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", trips_path, class: "button is-light is-medium" %>
+    </div>
+  </div>
+<% end %>

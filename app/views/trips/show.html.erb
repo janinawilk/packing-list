@@ -1,0 +1,43 @@
+<div class="level">
+  <div class="level-left">
+    <div>
+      <h1 class="title"><%= @trip.name %></h1>
+      <% if @trip.tags.any? %>
+        <div class="tags">
+          <% @trip.tags.each do |tag| %>
+            <span class="tag is-primary is-light"><%= tag.name %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="level-right">
+    <div class="buttons">
+      <%= link_to "Edit", edit_trip_path(@trip), class: "button is-link is-light" %>
+      <%= button_to "Delete", trip_path(@trip), method: :delete,
+            class: "button is-danger is-light",
+            form: { data: { turbo_confirm: "Delete this trip?" } } %>
+    </div>
+  </div>
+</div>
+
+<%= render "trips/progress", trip: @trip %>
+
+<div id="trip-items">
+  <% @trip_items_by_category.each do |category, trip_items| %>
+    <div class="box mb-4">
+      <h2 class="subtitle is-5 mb-3"><%= category.name %></h2>
+      <% trip_items.each do |trip_item| %>
+        <%= render "trip_items/trip_item", trip_item: trip_item %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @trip.trip_items.empty? %>
+    <div class="has-text-centered py-6">
+      <p class="is-size-5 has-text-grey">No items yet. Add some below!</p>
+    </div>
+  <% end %>
+</div>
+
+<%= render "trips/add_item_form", trip: @trip, available_items: @available_items %>
