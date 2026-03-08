@@ -1,0 +1,36 @@
+<h1 class="title">Kopiuj listę</h1>
+
+<div class="box">
+  <p class="mb-4">
+    Kopiujesz <strong><%= @trip.name %></strong> (<%= @trip.trip_items.count %> przedmiotów).
+    Wszystkie przedmioty zostaną skopiowane jako niespakowane.
+  </p>
+
+  <%= form_with url: create_copy_trip_path(@trip), method: :post do |f| %>
+    <% if @new_trip.errors.any? %>
+      <div class="notification is-danger is-light">
+        <ul>
+          <% @new_trip.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name, "Nazwa nowej listy", class: "label" %>
+      <div class="control">
+        <%= text_field_tag "trip[name]", @new_trip.name, class: "input", autofocus: true %>
+      </div>
+    </div>
+
+    <div class="field is-grouped mt-5">
+      <div class="control">
+        <%= f.submit "Kopiuj", class: "button is-primary is-medium" %>
+      </div>
+      <div class="control">
+        <%= link_to "Anuluj", trip_path(@trip), class: "button is-light is-medium" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :tags
   resources :items
   resources :trips do
+    member do
+      get :copy
+      post :create_copy
+    end
     resources :trip_items, only: [:create, :destroy] do
       member do
         patch :toggle_packed

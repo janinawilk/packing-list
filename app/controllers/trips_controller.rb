@@ -1,5 +1,5 @@
 class TripsController < ApplicationController
-  before_action :set_trip, only: %i[show edit update destroy]
+  before_action :set_trip, only: %i[show edit update destroy copy create_copy]
 
   def index
     @trips = Trip.includes(:trip_items).order(created_at: :desc)
@@ -43,6 +43,26 @@ class TripsController < ApplicationController
   def destroy
     @trip.destroy
     redirect_to trips_path, notice: "Trip deleted."
+  end
+
+  def copy
+    @new_trip = Trip.new(name: "#{@trip.name} (kopia)")
+  end
+
+  def create_copy
+    @new_trip = Trip.new(name: params[:trip][:name])
+
+    if @new_trip.save
+      @trip.trip_filters.each do |tf|
+        @new_trip.trip_filters.create!(tag_id: tf.tag_id)
+      end
+      @trip.trip_items.each do |ti|
+        @new_trip.trip_items.create!(item_id: ti.item_id, is_packed: false, added_manually: ti.added_manually)
+      end
+      redirect_to @new_trip, notice: "Skopiowano listę z #{@new_trip.trip_items.count} przedmiotami."
+    else
+      render :copy, status: :unprocessable_entity
+    end
   end
 
   private
